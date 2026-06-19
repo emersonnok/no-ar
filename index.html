@@ -4,397 +4,711 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0E1417">
-<title>No Ar — próximos episódios</title>
+<title>No Ar</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0E1417; --bg2:#141d22; --card:#18242a; --line:#27343b;
-    --ink:#EDE7DC; --muted:#8aa0a8; --coral:#FF6B4A; --amber:#FFC45D;
-    --good:#5fd6a0;
-    --display:'Space Grotesk',system-ui,sans-serif;
-    --body:'Inter',system-ui,-apple-system,sans-serif;
-  }
-  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body)}
-  body{padding:env(safe-area-inset-top) 0 calc(96px + env(safe-area-inset-bottom)); min-height:100vh}
-  a{color:var(--coral)}
-  .wrap{max-width:560px;margin:0 auto;padding:0 16px}
+:root{
+  --bg:#0E1417;--bg2:#141d22;--card:#18242a;--line:#27343b;
+  --ink:#EDE7DC;--muted:#8aa0a8;--coral:#FF6B4A;--amber:#FFC45D;--good:#5fd6a0;--good2:#1a3d2e;
+  --display:'Space Grotesk',system-ui,sans-serif;
+  --body:'Inter',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:var(--body);min-height:100vh}
+body{padding-bottom:calc(80px + env(safe-area-inset-bottom))}
 
-  header{position:sticky;top:0;z-index:5;background:linear-gradient(180deg,var(--bg) 70%,transparent);
-    padding:18px 0 10px}
-  .brand{display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .brand h1{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.02em;margin:0;
-    display:flex;align-items:center;gap:9px}
-  .brand h1 .play{width:13px;height:15px;background:var(--coral);
-    clip-path:polygon(0 0,100% 50%,0 100%);display:inline-block}
-  .iconbtn{background:var(--card);border:1px solid var(--line);color:var(--ink);
-    width:40px;height:40px;border-radius:12px;display:grid;place-items:center;cursor:pointer}
-  .iconbtn:active{transform:scale(.94)}
-  .iconbtn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8}
+/* ── VIEWS ── */
+.view{display:none;max-width:560px;margin:0 auto;padding:0 16px}
+.view.active{display:block}
 
-  /* hero — próximo de todos */
-  .hero{margin:6px 0 22px;border:1px solid var(--line);border-radius:20px;overflow:hidden;
-    background:radial-gradient(120% 140% at 80% 0%,#1d2c33 0%,var(--bg2) 60%);position:relative}
-  .hero .eyebrow{font-family:var(--display);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--amber);padding:16px 18px 0}
-  .hero .row{display:flex;gap:14px;padding:8px 18px 18px;align-items:flex-end}
-  .hero .poster{width:78px;aspect-ratio:2/3;border-radius:10px;object-fit:cover;background:var(--line);flex:none}
-  .hero .info{flex:1;min-width:0}
-  .hero .name{font-family:var(--display);font-weight:700;font-size:20px;line-height:1.1;margin:0 0 4px;
-    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .hero .sub{color:var(--muted);font-size:13px;margin:0 0 2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .hero .count{margin-left:auto;text-align:right;flex:none}
-  .hero .count .num{font-family:var(--display);font-weight:700;font-size:40px;line-height:.9;color:var(--coral)}
-  .hero .count .unit{font-size:11px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+/* ── HEADER ── */
+header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,var(--bg) 75%,transparent);padding:16px 0 8px}
+.topbar{display:flex;align-items:center;gap:10px}
+.topbar h1{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px;flex:1}
+.play-tri{width:12px;height:14px;background:var(--coral);clip-path:polygon(0 0,100% 50%,0 100%);display:inline-block;flex:none}
+.iconbtn{background:var(--card);border:1px solid var(--line);color:var(--ink);width:38px;height:38px;border-radius:11px;display:grid;place-items:center;cursor:pointer;flex:none}
+.iconbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+.iconbtn:active{transform:scale(.93)}
+.backbtn{background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:6px;font-size:14px;padding:4px 0;font-family:var(--body)}
+.backbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
 
-  /* list */
-  .sectit{font-family:var(--display);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--muted);margin:0 0 10px}
-  .card{display:flex;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:16px;
-    padding:12px;margin-bottom:11px;align-items:center}
-  .card .poster{width:52px;aspect-ratio:2/3;border-radius:8px;object-fit:cover;background:var(--line);flex:none}
-  .card .mid{flex:1;min-width:0}
-  .card .mid .nm{font-weight:600;font-size:15px;margin:0 0 3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .card .mid .ep{color:var(--muted);font-size:12.5px;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .card .mid .strm{display:inline-block;margin-top:5px;font-size:11px;color:var(--amber);
-    border:1px solid var(--line);border-radius:999px;padding:2px 9px}
-  .card .right{flex:none;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
-  .card .days{font-family:var(--display);font-weight:700;font-size:20px;line-height:1;color:var(--coral)}
-  .card .days small{display:block;font-family:var(--body);font-weight:500;font-size:10px;color:var(--muted);
-    text-transform:uppercase;letter-spacing:.05em}
-  .card .days.aired{color:var(--good)}
-  .card .days.unknown{color:var(--muted);font-size:13px}
-  .card .acts{display:flex;gap:6px}
-  .minibtn{background:transparent;border:1px solid var(--line);border-radius:9px;color:var(--muted);
-    width:30px;height:30px;display:grid;place-items:center;cursor:pointer}
-  .minibtn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8}
-  .minibtn.cal:active,.minibtn.del:active{transform:scale(.92)}
-  .minibtn.cal{color:var(--amber);border-color:#3a3320}
+/* ── HOME HERO ── */
+.hero{border:1px solid var(--line);border-radius:20px;overflow:hidden;
+  background:radial-gradient(120% 140% at 80% 0%,#1d2c33,var(--bg2));margin:6px 0 20px}
+.hero-eye{font-family:var(--display);font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:14px 16px 0}
+.hero-row{display:flex;gap:12px;padding:8px 16px 16px;align-items:flex-end}
+.hero-poster{width:72px;aspect-ratio:2/3;border-radius:9px;object-fit:cover;background:var(--line);flex:none}
+.hero-info{flex:1;min-width:0}
+.hero-name{font-family:var(--display);font-weight:700;font-size:18px;line-height:1.1;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hero-sub{font-size:12.5px;color:var(--muted);margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:99px;display:flex;align-items:center;gap:4px}
+.badge.next-watch{background:var(--good2);color:var(--good);border:1px solid #2a5c40}
+.badge.next-air{background:#2a1a10;color:var(--coral);border:1px solid #4a2a18}
+.badge svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2.2;flex:none}
+.hero-days{flex:none;text-align:right}
+.hero-num{font-family:var(--display);font-weight:700;font-size:36px;line-height:.9;color:var(--coral)}
+.hero-unit{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 
-  .empty{text-align:center;color:var(--muted);padding:48px 20px}
-  .empty .play{width:34px;height:40px;background:var(--line);display:inline-block;
-    clip-path:polygon(0 0,100% 50%,0 100%);margin-bottom:14px}
-  .empty p{margin:6px 0;font-size:14px}
+/* ── SECTION TITLE ── */
+.sectit{font-family:var(--display);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
 
-  .bar{display:flex;gap:10px;margin:18px 0 8px}
-  .bar button{flex:1;background:var(--bg2);border:1px solid var(--line);color:var(--ink);
-    border-radius:12px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;font-family:var(--body)}
-  .bar button:active{transform:scale(.98)}
+/* ── SHOW CARD (home list) ── */
+.scard{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:15px;padding:11px;margin-bottom:10px;cursor:pointer;align-items:center}
+.scard:active{border-color:var(--coral)}
+.scard .poster{width:48px;aspect-ratio:2/3;border-radius:7px;object-fit:cover;background:var(--line);flex:none}
+.scard .mid{flex:1;min-width:0}
+.scard .nm{font-weight:600;font-size:14.5px;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.scard .ep{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px}
+.scard .prog-wrap{display:flex;align-items:center;gap:7px}
+.scard .prog-bar{flex:1;height:3px;background:var(--line);border-radius:99px;overflow:hidden}
+.scard .prog-fill{height:100%;background:var(--good);border-radius:99px;transition:width .3s}
+.scard .prog-txt{font-size:11px;color:var(--muted);flex:none;white-space:nowrap}
+.scard .right{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.scard .days{font-family:var(--display);font-weight:700;font-size:18px;line-height:1;color:var(--coral);text-align:right}
+.scard .days small{display:block;font-family:var(--body);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.scard .days.green{color:var(--good)}
+.scard .days.dim{color:var(--muted);font-size:12px}
+.scard .acts{display:flex;gap:5px}
+.minibtn{background:transparent;border:1px solid var(--line);border-radius:8px;color:var(--muted);width:28px;height:28px;display:grid;place-items:center;cursor:pointer}
+.minibtn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8}
+.minibtn.cal{color:var(--amber);border-color:#3a3320}
+.minibtn:active{transform:scale(.9)}
 
-  /* FAB */
-  .fab{position:fixed;right:max(18px,calc(50% - 280px + 18px));
-    bottom:calc(22px + env(safe-area-inset-bottom));z-index:8;
-    width:58px;height:58px;border-radius:18px;border:none;background:var(--coral);color:#1a0f0a;
-    font-size:30px;font-weight:600;cursor:pointer;box-shadow:0 8px 28px rgba(255,107,74,.35);
-    display:grid;place-items:center}
-  .fab:active{transform:scale(.93)}
+/* ── EMPTY ── */
+.empty{text-align:center;color:var(--muted);padding:52px 20px}
+.empty .big-play{width:32px;height:38px;background:var(--line);clip-path:polygon(0 0,100% 50%,0 100%);display:inline-block;margin-bottom:14px}
+.empty p{font-size:14px;margin-top:6px}
 
-  /* sheet / modal */
-  .scrim{position:fixed;inset:0;background:rgba(4,8,10,.6);z-index:20;display:none}
-  .scrim.on{display:block}
-  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;background:var(--bg2);
-    border-radius:22px 22px 0 0;border-top:1px solid var(--line);
-    max-width:560px;margin:0 auto;max-height:88vh;overflow:auto;
-    padding:8px 18px calc(22px + env(safe-area-inset-bottom));transform:translateY(110%);
-    transition:transform .26s cubic-bezier(.2,.8,.2,1)}
-  .sheet.on{transform:translateY(0)}
-  .grab{width:40px;height:4px;border-radius:99px;background:var(--line);margin:8px auto 14px}
-  .sheet h2{font-family:var(--display);font-size:18px;margin:0 0 14px}
-  .tabs{display:flex;gap:8px;margin-bottom:14px}
-  .tabs button{flex:1;background:transparent;border:1px solid var(--line);color:var(--muted);
-    padding:9px;border-radius:10px;font-size:13px;cursor:pointer;font-family:var(--body)}
-  .tabs button.on{background:var(--coral);color:#1a0f0a;border-color:var(--coral);font-weight:600}
-  label{display:block;font-size:12px;color:var(--muted);margin:10px 0 5px}
-  input,select{width:100%;background:var(--card);border:1px solid var(--line);color:var(--ink);
-    border-radius:11px;padding:12px;font-size:15px;font-family:var(--body)}
-  input:focus,select:focus{outline:none;border-color:var(--coral)}
-  .searchrow{display:flex;gap:8px}
-  .searchrow button{flex:none;background:var(--coral);color:#1a0f0a;border:none;border-radius:11px;
-    padding:0 16px;font-weight:600;cursor:pointer}
-  .results{margin-top:12px;display:flex;flex-direction:column;gap:8px}
-  .result{display:flex;gap:11px;align-items:center;padding:8px;border:1px solid var(--line);
-    border-radius:12px;cursor:pointer;background:var(--card)}
-  .result:active{border-color:var(--coral)}
-  .result img{width:42px;aspect-ratio:2/3;object-fit:cover;border-radius:6px;background:var(--line);flex:none}
-  .result .rn{font-size:14px;font-weight:600;margin:0}
-  .result .rm{font-size:12px;color:var(--muted);margin:2px 0 0}
-  .hint{font-size:12px;color:var(--muted);line-height:1.5;margin:14px 0 0}
-  .primary{width:100%;background:var(--coral);color:#1a0f0a;border:none;border-radius:13px;
-    padding:14px;font-size:15px;font-weight:600;cursor:pointer;margin-top:16px;font-family:var(--body)}
-  .spin{display:inline-block;width:15px;height:15px;border:2px solid #1a0f0a55;border-top-color:#1a0f0a;
-    border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
-  @keyframes sp{to{transform:rotate(360deg)}}
-  .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);
-    background:#101a1f;border:1px solid var(--line);color:var(--ink);padding:11px 16px;border-radius:12px;
-    font-size:13px;z-index:30;opacity:0;transition:.25s;pointer-events:none;max-width:90vw;text-align:center}
-  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-  @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* ── FAB ── */
+.fab{position:fixed;right:max(18px,calc(50% - 262px));bottom:calc(20px + env(safe-area-inset-bottom));z-index:8;
+  width:56px;height:56px;border-radius:17px;border:none;background:var(--coral);color:#1a0f0a;
+  font-size:28px;cursor:pointer;box-shadow:0 8px 28px rgba(255,107,74,.35);display:grid;place-items:center}
+.fab:active{transform:scale(.93)}
+
+/* ── BOTTOM STRIP ── */
+.bottom-strip{display:flex;gap:10px;margin-top:16px}
+.bottom-strip button{flex:1;background:var(--bg2);border:1px solid var(--line);color:var(--ink);
+  border-radius:11px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;font-family:var(--body)}
+.bottom-strip button:active{transform:scale(.98)}
+
+/* ── DETAIL VIEW ── */
+#viewDetail header{padding-top:env(safe-area-inset-top,16px)}
+.show-header{display:flex;gap:14px;margin:12px 0 20px;align-items:flex-start}
+.show-poster{width:90px;aspect-ratio:2/3;border-radius:12px;object-fit:cover;background:var(--line);flex:none}
+.show-meta{flex:1;min-width:0}
+.show-title{font-family:var(--display);font-weight:700;font-size:20px;line-height:1.1;margin-bottom:5px}
+.show-stream{display:inline-block;font-size:11px;color:var(--amber);border:1px solid var(--line);border-radius:99px;padding:2px 9px;margin-bottom:8px}
+.show-stats{display:flex;gap:10px;flex-wrap:wrap}
+.stat{font-size:12px;color:var(--muted)}
+.stat span{color:var(--ink);font-weight:600}
+.overall-prog{margin-bottom:20px}
+.overall-bar{height:5px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:6px}
+.overall-fill{height:100%;background:var(--good);border-radius:99px;transition:width .4s}
+
+/* ── SEASON BLOCK ── */
+.season-block{margin-bottom:6px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.season-head{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;background:var(--bg2)}
+.season-head:active{background:var(--card)}
+.season-label{font-family:var(--display);font-weight:700;font-size:14px;flex:1}
+.season-prog{font-size:11px;color:var(--muted)}
+.season-prog-bar{flex:none;width:60px;height:3px;background:var(--line);border-radius:99px;overflow:hidden}
+.season-prog-fill{height:100%;background:var(--good);border-radius:99px;transition:width .3s}
+.chevron{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:2;transition:transform .2s;flex:none}
+.chevron.open{transform:rotate(180deg)}
+.mark-season-btn{font-size:11px;background:transparent;border:1px solid var(--line);color:var(--muted);
+  border-radius:7px;padding:3px 8px;cursor:pointer;font-family:var(--body);white-space:nowrap}
+.mark-season-btn:active{transform:scale(.95)}
+.mark-season-btn.all-watched{color:var(--good);border-color:var(--good2)}
+.ep-list{display:none;border-top:1px solid var(--line)}
+.ep-list.open{display:block}
+.ep-row{display:flex;align-items:center;gap:11px;padding:10px 14px;border-bottom:1px solid var(--line);cursor:pointer}
+.ep-row:last-child{border-bottom:none}
+.ep-row:active{background:var(--bg)}
+.ep-check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line);flex:none;display:grid;place-items:center;transition:all .15s}
+.ep-check.watched{background:var(--good);border-color:var(--good)}
+.ep-check svg{width:11px;height:11px;stroke:#0e1417;fill:none;stroke-width:2.5;opacity:0;transition:opacity .15s}
+.ep-check.watched svg{opacity:1}
+.ep-info{flex:1;min-width:0}
+.ep-code{font-size:11px;color:var(--muted);margin-bottom:1px}
+.ep-name{font-size:13.5px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ep-name.watched{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+.ep-air{font-size:11px;color:var(--muted);flex:none;text-align:right}
+.ep-air.future{color:var(--coral)}
+.ep-air.today{color:var(--amber);font-weight:600}
+.loading-eps{text-align:center;color:var(--muted);padding:28px;font-size:13px}
+
+/* ── SHEET / MODAL ── */
+.scrim{position:fixed;inset:0;background:rgba(4,8,10,.65);z-index:20;display:none}
+.scrim.on{display:block}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;background:var(--bg2);
+  border-radius:22px 22px 0 0;border-top:1px solid var(--line);
+  max-width:560px;margin:0 auto;max-height:88vh;overflow:auto;
+  padding:8px 18px calc(24px + env(safe-area-inset-bottom));
+  transform:translateY(110%);transition:transform .26s cubic-bezier(.2,.8,.2,1)}
+.sheet.on{transform:translateY(0)}
+.grab{width:38px;height:4px;border-radius:99px;background:var(--line);margin:8px auto 14px}
+.sheet h2{font-family:var(--display);font-size:17px;margin-bottom:13px}
+.tabs{display:flex;gap:7px;margin-bottom:13px}
+.tabs button{flex:1;background:transparent;border:1px solid var(--line);color:var(--muted);
+  padding:9px;border-radius:10px;font-size:12.5px;cursor:pointer;font-family:var(--body)}
+.tabs button.on{background:var(--coral);color:#1a0f0a;border-color:var(--coral);font-weight:600}
+label{display:block;font-size:12px;color:var(--muted);margin:10px 0 5px}
+input,select{width:100%;background:var(--card);border:1px solid var(--line);color:var(--ink);
+  border-radius:10px;padding:11px;font-size:15px;font-family:var(--body)}
+input:focus,select:focus{outline:none;border-color:var(--coral)}
+.searchrow{display:flex;gap:8px}
+.searchrow button{flex:none;background:var(--coral);color:#1a0f0a;border:none;border-radius:10px;
+  padding:0 15px;font-weight:600;cursor:pointer;font-family:var(--body);font-size:14px}
+.results{margin-top:11px;display:flex;flex-direction:column;gap:7px}
+.result{display:flex;gap:10px;align-items:center;padding:8px;border:1px solid var(--line);
+  border-radius:11px;cursor:pointer;background:var(--card)}
+.result:active{border-color:var(--coral)}
+.result img{width:40px;aspect-ratio:2/3;object-fit:cover;border-radius:6px;background:var(--line);flex:none}
+.result .rn{font-size:13.5px;font-weight:600}
+.result .rm{font-size:11.5px;color:var(--muted);margin-top:2px}
+.hint{font-size:12px;color:var(--muted);line-height:1.5;margin-top:12px}
+.primary{width:100%;background:var(--coral);color:#1a0f0a;border:none;border-radius:12px;
+  padding:13px;font-size:14.5px;font-weight:600;cursor:pointer;margin-top:14px;font-family:var(--body)}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid #1a0f0a44;border-top-color:#1a0f0a;
+  border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ── TOAST ── */
+.toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%) translateY(16px);
+  background:#101a1f;border:1px solid var(--line);color:var(--ink);padding:10px 15px;
+  border-radius:11px;font-size:13px;z-index:30;opacity:0;transition:.22s;pointer-events:none;
+  max-width:88vw;text-align:center;white-space:nowrap}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="brand">
-      <h1><span class="play"></span>No Ar</h1>
-      <div style="display:flex;gap:8px">
+
+<!-- ═══════════════════════ VIEW: HOME ═══════════════════════ -->
+<div class="view active" id="viewHome">
+  <div class="wrap" style="max-width:560px;margin:0 auto;padding:0 16px">
+    <header>
+      <div class="topbar">
+        <h1><span class="play-tri"></span>No Ar</h1>
         <button class="iconbtn" id="notifBtn" title="Notificações">
           <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
         </button>
-        <button class="iconbtn" id="refreshBtn" title="Atualizar episódios">
+        <button class="iconbtn" id="refreshBtn" title="Atualizar">
           <svg viewBox="0 0 24 24"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
         </button>
       </div>
+    </header>
+    <div id="homeHero"></div>
+    <p class="sectit" id="listTitle" style="display:none">Todas as séries</p>
+    <div id="homeList"></div>
+    <div class="bottom-strip" id="bottomStrip" style="display:none">
+      <button id="addAllCal">Jogar todos na Agenda</button>
     </div>
-  </header>
-
-  <div id="hero"></div>
-  <p class="sectit" id="listTitle" style="display:none">Todas as séries</p>
-  <div id="list"></div>
-
-  <div class="bar" id="bottomBar" style="display:none">
-    <button id="addAllCal">Jogar todos na Agenda</button>
   </div>
 </div>
 
-<button class="fab" id="fab" aria-label="Adicionar série">+</button>
+<!-- ═══════════════════════ VIEW: DETAIL ═══════════════════════ -->
+<div class="view" id="viewDetail">
+  <div style="max-width:560px;margin:0 auto;padding:0 16px">
+    <header>
+      <div class="topbar">
+        <button class="backbtn" id="backBtn">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          Voltar
+        </button>
+        <div style="flex:1"></div>
+        <button class="minibtn cal" id="detailCalBtn" title="Adicionar à Agenda">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </button>
+        <button class="minibtn" id="detailDelBtn" title="Remover série" style="margin-left:4px">
+          <svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+        </button>
+      </div>
+    </header>
+    <div id="detailHeader"></div>
+    <div id="detailOverall"></div>
+    <div id="seasonsList"></div>
+  </div>
+</div>
 
+<!-- FAB -->
+<button class="fab" id="fab">+</button>
+
+<!-- Sheet -->
 <div class="scrim" id="scrim"></div>
-<div class="sheet" id="sheet" role="dialog" aria-modal="true">
+<div class="sheet" id="sheet">
   <div class="grab"></div>
   <h2>Adicionar série</h2>
   <div class="tabs">
-    <button class="on" data-tab="auto" id="tabAuto">Buscar automático</button>
-    <button data-tab="manual" id="tabManual">Inserir manual</button>
+    <button class="on" id="tabAuto">Buscar automático</button>
+    <button id="tabManual">Inserir manual</button>
   </div>
-
   <div id="paneAuto">
     <label>Nome da série</label>
     <div class="searchrow">
-      <input id="q" placeholder="ex: Severance, The Boys..." autocomplete="off">
+      <input id="q" placeholder="ex: Severance, The Boys…" autocomplete="off">
       <button id="searchBtn">Buscar</button>
     </div>
     <div class="results" id="results"></div>
-    <p class="hint">A busca usa a base do TVMaze e já traz o calendário de episódios. Se a sua série não aparecer, use “Inserir manual”.</p>
+    <p class="hint">Usa a base do TVMaze. Se não encontrar, use "Inserir manual".</p>
   </div>
-
   <div id="paneManual" style="display:none">
     <label>Nome da série</label>
     <input id="mName" placeholder="Nome da série">
-    <label>Onde assiste (streaming)</label>
-    <input id="mStream" placeholder="Netflix, Max, Disney+...">
+    <label>Streaming</label>
+    <input id="mStream" placeholder="Netflix, Max, Disney+…">
     <label>Data e hora do próximo episódio</label>
     <input id="mDate" type="datetime-local">
-    <button class="primary" id="mAdd">Adicionar série</button>
+    <button class="primary" id="mAdd">Adicionar</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const API = "https://api.tvmaze.com";
-const KEY = "noar.shows.v1";
-let shows = load();
+// ═══════ STORAGE ═══════
+const SKEY = 'noar.shows.v2';
+const WKEY = 'noar.watched.v1';   // {epId: true}
+const EKEY = 'noar.episodes.v1';  // {showId: [episodes]}
 
-function load(){ try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []} }
-function save(){ localStorage.setItem(KEY, JSON.stringify(shows)); }
-function uid(){ return "m"+Date.now()+Math.random().toString(36).slice(2,6); }
+let shows   = lj(SKEY, []);
+let watched = lj(WKEY, {});
+let epCache = lj(EKEY, {});
 
-function toast(msg){
-  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('on');
-  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('on'),2600);
-}
+function lj(k,d){ try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d} }
+function sj(k,v){ try{localStorage.setItem(k,JSON.stringify(v))}catch{} }
+function saveShows(){ sj(SKEY,shows); }
+function saveWatched(){ sj(WKEY,watched); }
+function saveEpCache(){ sj(EKEY,epCache); }
 
-// ---- date helpers ----
-function nextDate(s){
+// ═══════ UTILS ═══════
+let _tid; function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('on'); clearTimeout(_tid); _tid=setTimeout(()=>t.classList.remove('on'),2500); }
+function uid(){ return 'm'+Date.now()+Math.random().toString(36).slice(2,6); }
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function pad(n){ return String(n).padStart(2,'0'); }
+
+// ═══════ DATE HELPERS ═══════
+function nextAirDate(s){
   if(s.source==='manual') return s.manualDate ? new Date(s.manualDate) : null;
-  return s.next && s.next.airstamp ? new Date(s.next.airstamp) : null;
+  return s.next?.airstamp ? new Date(s.next.airstamp) : null;
 }
 function daysUntil(d){
   if(!d) return null;
-  const now=new Date();
   const a=new Date(d.getFullYear(),d.getMonth(),d.getDate());
-  const b=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-  return Math.round((a-b)/86400000);
+  const b=new Date(); const c=new Date(b.getFullYear(),b.getMonth(),b.getDate());
+  return Math.round((a-c)/86400000);
 }
 function fmtDate(d){
-  if(!d) return "Sem data prevista";
+  if(!d) return 'Sem data';
   return d.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'})
-    + (d.getHours()||d.getMinutes() ? ' · '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) : '');
+    +(d.getHours()||d.getMinutes() ? ' · '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) : '');
 }
-function epLabel(s){
-  if(s.source==='manual') return s.epText || 'Próximo episódio';
-  if(!s.next) return 'Sem episódio futuro anunciado';
-  const se = (s.next.season!=null? 'T'+s.next.season:'') + (s.next.number!=null? 'E'+String(s.next.number).padStart(2,'0'):'');
-  return (se?se+' · ':'') + (s.next.name||'Próximo episódio');
+function fmtShort(d){
+  if(!d) return '';
+  return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
 }
-function daysBadge(d){
+function airClass(d){
+  if(!d) return '';
   const n=daysUntil(d);
-  if(n===null) return {cls:'unknown', txt:'—', sub:'sem data'};
-  if(n<0) return {cls:'aired', txt:'no ar', sub:'já estreou'};
-  if(n===0) return {cls:'', txt:'hoje', sub:'estreia'};
-  if(n===1) return {cls:'', txt:'1', sub:'dia'};
-  return {cls:'', txt:String(n), sub:'dias'};
+  if(n===0) return 'today';
+  if(n>0) return 'future';
+  return '';
 }
 
-// ---- TVMaze ----
+// ═══════ EPISODE HELPERS ═══════
+function getEps(showId){ return epCache[showId] || []; }
+function totalEps(showId){ return getEps(showId).length; }
+function watchedCount(showId){ return getEps(showId).filter(e=>watched[e.id]).length; }
+function isEpWatched(epId){ return !!watched[epId]; }
+
+function nextUnwatched(showId){
+  // first episode that is not watched and has aired or has future airdate
+  const eps = getEps(showId);
+  return eps.find(e => !watched[e.id]) || null;
+}
+
+function epLabel(s){
+  if(s.source==='manual') return s.epText||'Próximo episódio';
+  if(!s.next) return 'Sem episódio futuro';
+  const se = (s.next.season!=null?'T'+s.next.season:'')+(s.next.number!=null?'E'+pad(s.next.number):'');
+  return (se?se+' · ':'')+(s.next.name||'Próximo episódio');
+}
+
+function nextUnwatchedLabel(showId){
+  const e = nextUnwatched(showId);
+  if(!e) return null;
+  return 'T'+e.season+'E'+pad(e.number)+' · '+(e.name||'Ep '+e.number);
+}
+
+// ═══════ TVMAZE API ═══════
+const API = 'https://api.tvmaze.com';
+
 async function searchShows(q){
   const r = await fetch(`${API}/search/shows?q=${encodeURIComponent(q)}`);
   return r.ok ? r.json() : [];
 }
-async function fetchNext(showId){
-  const r = await fetch(`${API}/shows/${showId}?embed=episodes`);
-  if(!r.ok) return {next:null, network:null};
+
+async function fetchNext(id){
+  const r = await fetch(`${API}/shows/${id}?embed=episodes`);
+  if(!r.ok) return {next:null,network:null};
   const d = await r.json();
-  const net = (d.network && d.network.name) || (d.webChannel && d.webChannel.name) || null;
-  const eps = (d._embedded && d._embedded.episodes) || [];
-  const now = Date.now();
-  const future = eps
-    .filter(e=> e.airstamp && new Date(e.airstamp).getTime() >= now - 12*3600000)
-    .sort((a,b)=> new Date(a.airstamp)-new Date(b.airstamp));
-  const e = future[0];
+  const net=(d.network?.name)||(d.webChannel?.name)||null;
+  const eps=(d._embedded?.episodes)||[];
+  const now=Date.now();
+  const future=eps.filter(e=>e.airstamp && new Date(e.airstamp).getTime()>=now-12*3600000)
+    .sort((a,b)=>new Date(a.airstamp)-new Date(b.airstamp));
+  const e=future[0];
   return {
-    next: e ? {name:e.name, season:e.season, number:e.number, airstamp:e.airstamp} : null,
-    network: net
+    next: e?{name:e.name,season:e.season,number:e.number,airstamp:e.airstamp}:null,
+    network:net, allEps:eps
   };
 }
 
-// ---- render ----
-function render(){
-  const sorted = [...shows].sort((a,b)=>{
-    const da=nextDate(a), db=nextDate(b);
-    if(!da && !db) return 0; if(!da) return 1; if(!db) return -1;
-    return da-db;
-  });
-  const hero=document.getElementById('hero');
-  const list=document.getElementById('list');
-  const listTitle=document.getElementById('listTitle');
-  const bar=document.getElementById('bottomBar');
+async function fetchAllEpisodes(showId){
+  if(epCache[showId]?.length) return epCache[showId];
+  const r = await fetch(`${API}/shows/${showId}/episodes`);
+  if(!r.ok) return [];
+  const eps = await r.json();
+  const mapped = eps.map(e=>({
+    id:e.id, season:e.season, number:e.number, name:e.name||'Ep '+e.number,
+    airstamp:e.airstamp||null, runtime:e.runtime||null
+  }));
+  epCache[showId] = mapped;
+  saveEpCache();
+  return mapped;
+}
 
-  if(shows.length===0){
-    hero.innerHTML=`<div class="empty"><span class="play"></span>
-      <p style="color:var(--ink);font-weight:600;font-size:16px">Nenhuma série ainda</p>
-      <p>Toque no + e adicione a primeira. O app descobre sozinho quando sai o próximo episódio.</p></div>`;
-    list.innerHTML=''; listTitle.style.display='none'; bar.style.display='none'; return;
+// ═══════ GOOGLE CALENDAR ═══════
+function gcalStamp(d){ return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+'T'+pad(d.getUTCHours())+pad(d.getUTCMinutes())+'00Z'; }
+function gcalUrl(s){
+  const d=nextAirDate(s); if(!d) return null;
+  const end=new Date(d.getTime()+60*60000);
+  const p=new URLSearchParams({action:'TEMPLATE',text:`${s.name} — novo episódio`,
+    dates:`${gcalStamp(d)}/${gcalStamp(end)}`,details:`${epLabel(s)}\nOnde: ${s.streaming||'—'}\n(No Ar app)`});
+  return 'https://calendar.google.com/calendar/render?'+p.toString();
+}
+
+// ═══════ HOME RENDER ═══════
+function renderHome(){
+  const sorted=[...shows].sort((a,b)=>{
+    const da=nextAirDate(a),db=nextAirDate(b);
+    if(!da&&!db)return 0;if(!da)return 1;if(!db)return -1;return da-db;
+  });
+
+  const hero=document.getElementById('homeHero');
+  const list=document.getElementById('homeList');
+  const lt=document.getElementById('listTitle');
+  const bs=document.getElementById('bottomStrip');
+
+  if(!shows.length){
+    hero.innerHTML=`<div class="empty"><span class="big-play"></span><p style="color:var(--ink);font-weight:600;font-size:16px">Nenhuma série ainda</p><p>Toque no + e adicione a primeira.</p></div>`;
+    list.innerHTML=''; lt.style.display='none'; bs.style.display='none'; return;
   }
 
-  const top = sorted[0];
-  const td = nextDate(top); const tb = daysBadge(td);
-  hero.innerHTML=`<div class="hero">
-    <div class="eyebrow">Próximo no ar</div>
-    <div class="row">
-      ${top.image?`<img class="poster" src="${top.image}" alt="">`:`<div class="poster"></div>`}
-      <div class="info">
-        <p class="name">${esc(top.name)}</p>
-        <p class="sub">${esc(epLabel(top))}</p>
-        <p class="sub" style="color:var(--amber)">${esc(top.streaming||'—')} · ${fmtDate(td)}</p>
+  // Hero: show with nearest air date
+  const top=sorted[0];
+  const td=nextAirDate(top); const dn=daysUntil(td);
+  const nuw=nextUnwatchedLabel(top.id);
+  const tc=totalEps(top.id); const wc=watchedCount(top.id);
+  hero.innerHTML=`<div class="hero" data-open="${top.id}">
+    <div class="hero-eye" style="color:var(--coral)">Próximo no ar</div>
+    <div class="hero-row">
+      ${top.image?`<img class="hero-poster" src="${top.image}" alt="">`:`<div class="hero-poster"></div>`}
+      <div class="hero-info">
+        <div class="hero-name">${esc(top.name)}</div>
+        <div class="hero-sub">${esc(top.streaming||'—')} · ${fmtDate(td)}</div>
+        <div class="badges">
+          ${nuw?`<span class="badge next-watch"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>${esc(nuw)}</span>`:''}
+          <span class="badge next-air"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>${esc(epLabel(top))}</span>
+        </div>
+        ${tc?`<div style="margin-top:8px;font-size:11px;color:var(--muted)">${wc}/${tc} assistidos</div>`:''}
       </div>
-      <div class="count"><div class="num">${tb.txt}</div><div class="unit">${tb.sub}</div></div>
+      <div class="hero-days">
+        <div class="hero-num">${dn===null?'—':dn===0?'hoje':dn<0?'no ar':String(dn)}</div>
+        <div class="hero-unit">${dn===null||dn===0?'':dn<0?'estreou':dn===1?'dia':'dias'}</div>
+      </div>
     </div>
   </div>`;
 
-  listTitle.style.display='block';
-  list.innerHTML = sorted.map(s=>{
-    const d=nextDate(s); const b=daysBadge(d);
-    return `<div class="card">
-      ${s.image?`<img class="poster" src="${s.image}" alt="">`:`<div class="poster"></div>`}
+  lt.style.display='block';
+  list.innerHTML=sorted.map(s=>{
+    const d=nextAirDate(s); const dn2=daysUntil(d);
+    const tc2=totalEps(s.id); const wc2=watchedCount(s.id);
+    const pct=tc2?Math.round(wc2/tc2*100):0;
+    const nuw2=nextUnwatchedLabel(s.id);
+    let daysTxt,daysClass='';
+    if(dn2===null){daysTxt='—';daysClass='dim';}
+    else if(dn2<0){daysTxt='no ar';daysClass='green';}
+    else if(dn2===0){daysTxt='hoje';daysClass='green';}
+    else{daysTxt=String(dn2);}
+    return `<div class="scard" data-open="${s.id}">
+      ${s.image?`<img class="poster" src="${esc(s.image)}" alt="">`:`<div class="poster"></div>`}
       <div class="mid">
-        <p class="nm">${esc(s.name)}</p>
-        <p class="ep">${esc(epLabel(s))}</p>
-        ${s.streaming?`<span class="strm">${esc(s.streaming)}</span>`:''}
-        <p class="ep" style="margin-top:5px">${fmtDate(d)}</p>
+        <div class="nm">${esc(s.name)}</div>
+        <div class="ep">${nuw2?esc(nuw2):esc(epLabel(s))}</div>
+        ${tc2?`<div class="prog-wrap"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div><span class="prog-txt">${wc2}/${tc2}</span></div>`:''}
       </div>
       <div class="right">
-        <div class="days ${b.cls}">${b.txt}<small>${b.sub}</small></div>
+        <div class="days ${daysClass}">${daysTxt}${dn2>1?'<small>dias</small>':dn2===1?'<small>dia</small>':''}</div>
         <div class="acts">
-          <button class="minibtn cal" data-cal="${s.id}" title="Adicionar à Google Agenda">
-            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          </button>
-          <button class="minibtn del" data-del="${s.id}" title="Remover">
-            <svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
-          </button>
+          <button class="minibtn cal" data-cal="${s.id}" title="Agenda"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></button>
+          <button class="minibtn" data-del="${s.id}" title="Remover"><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg></button>
         </div>
       </div>
     </div>`;
   }).join('');
-  bar.style.display='flex';
-}
-function esc(s){return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-
-// ---- Google Calendar ----
-function pad(n){return String(n).padStart(2,'0');}
-function gcalStamp(d){ // UTC compact
-  return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+'T'
-    +pad(d.getUTCHours())+pad(d.getUTCMinutes())+pad(d.getUTCSeconds())+'Z';
-}
-function gcalUrl(s){
-  const d=nextDate(s); if(!d) return null;
-  const end=new Date(d.getTime()+60*60000);
-  const title=`${s.name} — novo episódio`;
-  const det=`${epLabel(s)}\nOnde: ${s.streaming||'—'}\n\n(criado pelo app No Ar)`;
-  const p=new URLSearchParams({action:'TEMPLATE',text:title,
-    dates:`${gcalStamp(d)}/${gcalStamp(end)}`, details:det});
-  return 'https://calendar.google.com/calendar/render?'+p.toString();
+  bs.style.display='flex';
 }
 
-// ---- events ----
-document.getElementById('list').addEventListener('click',e=>{
-  const cal=e.target.closest('[data-cal]'); const del=e.target.closest('[data-del]');
-  if(cal){
-    const s=shows.find(x=>x.id==cal.dataset.cal); const u=gcalUrl(s);
-    if(!u){toast('Essa série está sem data prevista.');return;}
-    window.open(u,'_blank');
+// ═══════ DETAIL VIEW ═══════
+let detailShowId = null;
+
+async function openDetail(showId){
+  const s = shows.find(x=>x.id==showId);
+  if(!s) return;
+  detailShowId = showId;
+
+  document.getElementById('viewHome').classList.remove('active');
+  document.getElementById('viewDetail').classList.add('active');
+
+  // render header immediately
+  const tc=totalEps(showId); const wc=watchedCount(showId); const pct=tc?Math.round(wc/tc*100):0;
+  document.getElementById('detailHeader').innerHTML=`
+    <div class="show-header">
+      ${s.image?`<img class="show-poster" src="${esc(s.image)}" alt="">`:`<div class="show-poster"></div>`}
+      <div class="show-meta">
+        <div class="show-title">${esc(s.name)}</div>
+        ${s.streaming?`<span class="show-stream">${esc(s.streaming)}</span>`:''}
+        <div class="show-stats">
+          <span class="stat"><span>${tc||'?'}</span> eps</span>
+          <span class="stat"><span>${wc}</span> assistidos</span>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('detailOverall').innerHTML=tc?`
+    <div class="overall-prog">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)">
+        <span>Progresso geral</span><span>${pct}%</span>
+      </div>
+      <div class="overall-bar"><div class="overall-fill" style="width:${pct}%"></div></div>
+    </div>`:'';
+
+  document.getElementById('seasonsList').innerHTML=`<div class="loading-eps">Carregando episódios…</div>`;
+
+  // fetch episodes
+  const eps = await fetchAllEpisodes(showId);
+  renderSeasons(showId, eps);
+}
+
+function renderSeasons(showId, eps){
+  if(!eps.length){
+    document.getElementById('seasonsList').innerHTML=`<div class="loading-eps">Nenhum episódio encontrado.</div>`;
+    return;
   }
-  if(del){
-    shows=shows.filter(x=>x.id!=del.dataset.del); save(); render();
+  // group by season
+  const seasons={};
+  eps.forEach(e=>{ if(!seasons[e.season])seasons[e.season]=[]; seasons[e.season].push(e); });
+
+  const html=Object.keys(seasons).sort((a,b)=>+a-+b).map(sn=>{
+    const list=seasons[sn];
+    const total=list.length;
+    const done=list.filter(e=>watched[e.id]).length;
+    const pct=Math.round(done/total*100);
+    const allDone=done===total;
+    return `<div class="season-block">
+      <div class="season-head" data-season="${sn}" data-show="${showId}">
+        <div class="season-label">Temporada ${sn}</div>
+        <span class="season-prog">${done}/${total}</span>
+        <div class="season-prog-bar"><div class="season-prog-fill" style="width:${pct}%"></div></div>
+        <button class="mark-season-btn ${allDone?'all-watched':''}" data-markseason="${sn}" data-show="${showId}">${allDone?'✓ Toda assistida':'Marcar toda'}</button>
+        <svg class="chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="ep-list" id="eplist-${showId}-${sn}">
+        ${list.map(e=>{
+          const w=!!watched[e.id];
+          const d=e.airstamp?new Date(e.airstamp):null;
+          const ac=airClass(d);
+          return `<div class="ep-row" data-ep="${e.id}" data-show="${showId}">
+            <div class="ep-check ${w?'watched':''}">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="ep-info">
+              <div class="ep-code">T${e.season}E${pad(e.number)}</div>
+              <div class="ep-name ${w?'watched':''}">${esc(e.name)}</div>
+            </div>
+            <div class="ep-air ${ac}">${d?fmtShort(d):''}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('seasonsList').innerHTML=html;
+  updateDetailHeader(showId);
+}
+
+function updateDetailHeader(showId){
+  const s=shows.find(x=>x.id==showId); if(!s) return;
+  const tc=totalEps(showId); const wc=watchedCount(showId); const pct=tc?Math.round(wc/tc*100):0;
+  const h=document.getElementById('detailHeader');
+  if(h){
+    const st=h.querySelector('.show-stats');
+    if(st) st.innerHTML=`<span class="stat"><span>${tc}</span> eps</span><span class="stat"><span>${wc}</span> assistidos</span>`;
+  }
+  const ob=document.getElementById('detailOverall');
+  if(ob){
+    const of=ob.querySelector('.overall-fill');
+    if(of) of.style.width=pct+'%';
+    const op=ob.querySelector('.overall-prog>div>span:last-child');
+    if(op) op.textContent=pct+'%';
+  }
+}
+
+// season toggle
+document.getElementById('seasonsList').addEventListener('click', e=>{
+  // toggle season
+  const head=e.target.closest('.season-head');
+  if(head && !e.target.closest('.mark-season-btn')){
+    const sn=head.dataset.season; const sid=head.dataset.show;
+    const list=document.getElementById(`eplist-${sid}-${sn}`);
+    const chev=head.querySelector('.chevron');
+    if(list){ list.classList.toggle('open'); chev.classList.toggle('open'); }
+    return;
+  }
+  // mark whole season
+  const msBtn=e.target.closest('.mark-season-btn');
+  if(msBtn){
+    e.stopPropagation();
+    const sn=msBtn.dataset.markseason; const sid=msBtn.dataset.show;
+    const eps=getEps(sid).filter(ep=>ep.season==sn);
+    const allDone=eps.every(ep=>watched[ep.id]);
+    eps.forEach(ep=>{ if(allDone) delete watched[ep.id]; else watched[ep.id]=true; });
+    saveWatched();
+    renderSeasons(sid, getEps(sid));
+    renderHome();
+    toast(allDone?`T${sn} desmarcada.`:`T${sn} toda marcada!`);
+    return;
+  }
+  // toggle single ep
+  const row=e.target.closest('.ep-row');
+  if(row){
+    const epId=+row.dataset.ep; const sid=row.dataset.show;
+    if(watched[epId]) delete watched[epId]; else watched[epId]=true;
+    saveWatched();
+    // update just this row
+    const chk=row.querySelector('.ep-check'); const nm=row.querySelector('.ep-name');
+    chk.classList.toggle('watched',!!watched[epId]);
+    nm.classList.toggle('watched',!!watched[epId]);
+    // update season header
+    const sn=getEps(sid).find(e=>e.id===epId)?.season;
+    if(sn!==undefined){
+      const block=document.getElementById(`eplist-${sid}-${sn}`);
+      const head=block?.previousElementSibling;
+      if(head){
+        const list=getEps(sid).filter(e=>e.season==sn);
+        const done=list.filter(e=>watched[e.id]).length;
+        const pct=Math.round(done/list.length*100);
+        const allDone=done===list.length;
+        head.querySelector('.season-prog').textContent=`${done}/${list.length}`;
+        const fill=head.querySelector('.season-prog-fill');
+        if(fill) fill.style.width=pct+'%';
+        const mb=head.querySelector('.mark-season-btn');
+        if(mb){ mb.textContent=allDone?'✓ Toda assistida':'Marcar toda'; mb.classList.toggle('all-watched',allDone); }
+      }
+    }
+    updateDetailHeader(sid);
+    renderHome();
   }
 });
 
+// back button
+document.getElementById('backBtn').addEventListener('click',()=>{
+  document.getElementById('viewDetail').classList.remove('active');
+  document.getElementById('viewHome').classList.add('active');
+  detailShowId=null;
+});
+
+// detail cal & del
+document.getElementById('detailCalBtn').addEventListener('click',()=>{
+  if(!detailShowId) return;
+  const s=shows.find(x=>x.id==detailShowId); const u=gcalUrl(s);
+  if(!u){toast('Sem data futura.');return;} window.open(u,'_blank');
+});
+document.getElementById('detailDelBtn').addEventListener('click',()=>{
+  if(!detailShowId) return;
+  const s=shows.find(x=>x.id==detailShowId);
+  if(!confirm(`Remover "${s.name}"?`)) return;
+  shows=shows.filter(x=>x.id!=detailShowId);
+  delete epCache[detailShowId];
+  saveShows(); saveEpCache();
+  document.getElementById('viewDetail').classList.remove('active');
+  document.getElementById('viewHome').classList.add('active');
+  detailShowId=null; renderHome();
+  toast('Série removida.');
+});
+
+// open detail from home
+document.getElementById('homeHero').addEventListener('click',e=>{
+  const t=e.target.closest('[data-open]'); if(t) openDetail(t.dataset.open);
+});
+document.getElementById('homeList').addEventListener('click',e=>{
+  if(e.target.closest('[data-cal]')){
+    const id=e.target.closest('[data-cal]').dataset.cal;
+    const s=shows.find(x=>x.id==id); const u=gcalUrl(s);
+    if(!u){toast('Sem data futura.');return;} window.open(u,'_blank'); return;
+  }
+  if(e.target.closest('[data-del]')){
+    const id=e.target.closest('[data-del]').dataset.del;
+    const s=shows.find(x=>x.id==id);
+    shows=shows.filter(x=>x.id!=id); delete epCache[id];
+    saveShows(); saveEpCache(); renderHome(); toast(`${s.name} removida.`); return;
+  }
+  const card=e.target.closest('[data-open]'); if(card) openDetail(card.dataset.open);
+});
+
+// add all to cal
 document.getElementById('addAllCal').addEventListener('click',()=>{
-  const withDate = shows.filter(s=>nextDate(s) && daysUntil(nextDate(s))>=0);
+  const withDate=shows.filter(s=>nextAirDate(s)&&daysUntil(nextAirDate(s))>=0);
   if(!withDate.length){toast('Nenhuma série com data futura.');return;}
-  withDate.forEach((s,i)=> setTimeout(()=>window.open(gcalUrl(s),'_blank'), i*350));
-  toast(`Abrindo ${withDate.length} evento(s) na Agenda...`);
+  withDate.forEach((s,i)=>setTimeout(()=>window.open(gcalUrl(s),'_blank'),i*350));
+  toast(`Abrindo ${withDate.length} evento(s)…`);
 });
 
-// sheet open/close
-const scrim=document.getElementById('scrim'), sheet=document.getElementById('sheet');
-function openSheet(){scrim.classList.add('on');sheet.classList.add('on');setTimeout(()=>document.getElementById('q').focus(),200);}
-function closeSheet(){scrim.classList.remove('on');sheet.classList.remove('on');document.getElementById('results').innerHTML='';document.getElementById('q').value='';}
+// ═══════ SHEET / ADD SHOW ═══════
+const scrim=document.getElementById('scrim'),sheet=document.getElementById('sheet');
+function openSheet(){ scrim.classList.add('on'); sheet.classList.add('on'); setTimeout(()=>document.getElementById('q').focus(),200); }
+function closeSheet(){ scrim.classList.remove('on'); sheet.classList.remove('on'); document.getElementById('results').innerHTML=''; document.getElementById('q').value=''; }
 document.getElementById('fab').addEventListener('click',openSheet);
 scrim.addEventListener('click',closeSheet);
-
-// tabs
 document.getElementById('tabAuto').addEventListener('click',()=>setTab('auto'));
 document.getElementById('tabManual').addEventListener('click',()=>setTab('manual'));
 function setTab(t){
   document.getElementById('tabAuto').classList.toggle('on',t==='auto');
   document.getElementById('tabManual').classList.toggle('on',t==='manual');
-  document.getElementById('paneAuto').style.display = t==='auto'?'block':'none';
-  document.getElementById('paneManual').style.display = t==='manual'?'block':'none';
+  document.getElementById('paneAuto').style.display=t==='auto'?'block':'none';
+  document.getElementById('paneManual').style.display=t==='manual'?'block':'none';
 }
 
-// search
 const searchBtn=document.getElementById('searchBtn'), qEl=document.getElementById('q');
 async function doSearch(){
   const q=qEl.value.trim(); if(!q) return;
-  const res=document.getElementById('results');
   searchBtn.innerHTML='<span class="spin"></span>';
   try{
     const data=await searchShows(q);
-    res.innerHTML = data.slice(0,8).map(d=>{
+    document.getElementById('results').innerHTML=data.slice(0,8).map(d=>{
       const sh=d.show; const img=sh.image?sh.image.medium:'';
-      const net=(sh.network&&sh.network.name)||(sh.webChannel&&sh.webChannel.name)||'';
+      const net=(sh.network?.name)||(sh.webChannel?.name)||'';
       const yr=sh.premiered?sh.premiered.slice(0,4):'';
-      return `<div class="result" data-id="${sh.id}" data-name="${esc(sh.name)}" data-img="${esc((sh.image&&sh.image.original)||img)}" data-net="${esc(net)}">
+      return `<div class="result" data-id="${sh.id}" data-name="${esc(sh.name)}" data-img="${esc((sh.image?.original)||img)}" data-net="${esc(net)}">
         ${img?`<img src="${img}" alt="">`:'<img alt="">'}
-        <div><p class="rn">${esc(sh.name)}</p><p class="rm">${esc([yr,net].filter(Boolean).join(' · ')||sh.status||'')}</p></div>
+        <div><div class="rn">${esc(sh.name)}</div><div class="rm">${esc([yr,net].filter(Boolean).join(' · '))}</div></div>
       </div>`;
-    }).join('') || '<p class="hint">Nada encontrado. Tente outro nome ou use “Inserir manual”.</p>';
-  }catch(e){ res.innerHTML='<p class="hint">Falha na busca. Verifique a conexão.</p>'; }
+    }).join('')||'<p class="hint">Nada encontrado.</p>';
+  }catch{ document.getElementById('results').innerHTML='<p class="hint">Falha na busca.</p>'; }
   searchBtn.textContent='Buscar';
 }
 searchBtn.addEventListener('click',doSearch);
@@ -403,69 +717,69 @@ qEl.addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
 document.getElementById('results').addEventListener('click',async e=>{
   const r=e.target.closest('.result'); if(!r) return;
   const id=r.dataset.id;
-  if(shows.some(s=>s.id==id)){toast('Essa série já está na lista.');return;}
+  if(shows.some(s=>s.id==id)){toast('Já está na lista.');return;}
   r.style.opacity=.5;
-  const {next,network}=await fetchNext(id);
-  shows.push({id, name:r.dataset.name, image:r.dataset.img||'', source:'tvmaze',
-    streaming: network||r.dataset.net||'', next});
-  save(); render(); closeSheet();
-  toast(next?`${r.dataset.name} adicionada.`:`${r.dataset.name} adicionada (sem episódio futuro ainda).`);
+  const {next,network,allEps}=await fetchNext(id);
+  if(allEps?.length){ epCache[id]=allEps.map(ep=>({id:ep.id,season:ep.season,number:ep.number,name:ep.name||'Ep '+ep.number,airstamp:ep.airstamp||null})); saveEpCache(); }
+  shows.push({id, name:r.dataset.name, image:r.dataset.img||'', source:'tvmaze', streaming:network||r.dataset.net||'', next});
+  saveShows(); renderHome(); closeSheet();
+  toast(`${r.dataset.name} adicionada.`);
 });
 
-// manual add
 document.getElementById('mAdd').addEventListener('click',()=>{
   const name=document.getElementById('mName').value.trim();
   const stream=document.getElementById('mStream').value.trim();
   const dt=document.getElementById('mDate').value;
-  if(!name){toast('Dê um nome à série.');return;}
-  shows.push({id:uid(), name, image:'', source:'manual', streaming:stream,
-    manualDate: dt? new Date(dt).toISOString():null, epText:'Próximo episódio'});
-  save(); render(); closeSheet();
-  document.getElementById('mName').value='';document.getElementById('mStream').value='';document.getElementById('mDate').value='';
+  if(!name){toast('Dê um nome.');return;}
+  shows.push({id:uid(),name,image:'',source:'manual',streaming:stream,manualDate:dt?new Date(dt).toISOString():null,epText:'Próximo episódio'});
+  saveShows(); renderHome(); closeSheet();
+  ['mName','mStream','mDate'].forEach(id=>document.getElementById(id).value='');
   toast(`${name} adicionada.`);
 });
 
-// refresh all tvmaze shows
+// ═══════ REFRESH ═══════
 document.getElementById('refreshBtn').addEventListener('click',async()=>{
   const btn=document.getElementById('refreshBtn'); btn.style.opacity=.4;
-  let updated=0;
+  let n=0;
   for(const s of shows){
     if(s.source!=='tvmaze') continue;
-    try{ const {next,network}=await fetchNext(s.id); s.next=next; if(network)s.streaming=network; updated++; }catch(e){}
+    try{
+      const {next,network,allEps}=await fetchNext(s.id);
+      s.next=next; if(network)s.streaming=network;
+      if(allEps?.length){ epCache[s.id]=allEps.map(ep=>({id:ep.id,season:ep.season,number:ep.number,name:ep.name||'Ep '+ep.number,airstamp:ep.airstamp||null})); }
+      n++;
+    }catch{}
   }
-  save(); render(); btn.style.opacity=1;
-  toast(updated?`${updated} série(s) atualizada(s).`:'Nada para atualizar.');
-  checkNotify();
+  saveShows(); saveEpCache(); renderHome(); btn.style.opacity=1;
+  toast(n?`${n} série(s) atualizada(s).`:'Nada para atualizar.');
 });
 
-// ---- notifications (local, while app is open) ----
+// ═══════ NOTIFICATIONS ═══════
 document.getElementById('notifBtn').addEventListener('click',async()=>{
-  if(!('Notification' in window)){toast('Este navegador não suporta notificações.');return;}
+  if(!('Notification' in window)){toast('Navegador não suporta notificações.');return;}
   const p=await Notification.requestPermission();
-  toast(p==='granted'?'Notificações ativadas neste app.':'Permissão de notificação negada.');
+  toast(p==='granted'?'Notificações ativadas.':'Permissão negada.');
   if(p==='granted') checkNotify();
 });
 function checkNotify(){
-  if(!('Notification' in window) || Notification.permission!=='granted') return;
-  const todays = shows.filter(s=>{const n=daysUntil(nextDate(s));return n===0;});
-  const seen = JSON.parse(localStorage.getItem('noar.notified')||'[]');
-  const today = new Date().toDateString();
-  todays.forEach(s=>{
-    const tag = s.id+'|'+today;
-    if(seen.includes(tag)) return;
-    new Notification('Estreia hoje 🎬', {body:`${s.name} — ${epLabel(s)}`, icon:'icons/icon-192.png', tag});
+  if(!('Notification' in window)||Notification.permission!=='granted') return;
+  const today=new Date().toDateString();
+  const seen=lj('noar.notified',[]);
+  shows.filter(s=>daysUntil(nextAirDate(s))===0).forEach(s=>{
+    const tag=s.id+'|'+today; if(seen.includes(tag)) return;
+    new Notification('Estreia hoje 🎬',{body:`${s.name} — ${epLabel(s)}`,icon:'icons/icon-192.png',tag});
     seen.push(tag);
   });
-  localStorage.setItem('noar.notified', JSON.stringify(seen.slice(-200)));
+  sj('noar.notified',seen.slice(-200));
 }
 
 // service worker
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('service-worker.js').catch(()=>{}); }
+if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(()=>{});
 
-render();
+renderHome();
 checkNotify();
-// re-check when app regains focus
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden) checkNotify(); });
 </script>
 </body>
 </html>
+HTMLEOF

@@ -1,4 +1,4 @@
-const CACHE = "noar-v1";
+const CACHE = "noar-v2";
 const ASSETS = [
   "./",
   "./index.html",

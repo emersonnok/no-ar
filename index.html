@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1417">
+<title>No Ar — próximos episódios</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E1417; --bg2:#141d22; --card:#18242a; --line:#27343b;
+    --ink:#EDE7DC; --muted:#8aa0a8; --coral:#FF6B4A; --amber:#FFC45D;
+    --good:#5fd6a0;
+    --display:'Space Grotesk',system-ui,sans-serif;
+    --body:'Inter',system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body)}
+  body{padding:env(safe-area-inset-top) 0 calc(96px + env(safe-area-inset-bottom)); min-height:100vh}
+  a{color:var(--coral)}
+  .wrap{max-width:560px;margin:0 auto;padding:0 16px}
+
+  header{position:sticky;top:0;z-index:5;background:linear-gradient(180deg,var(--bg) 70%,transparent);
+    padding:18px 0 10px}
+  .brand{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .brand h1{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.02em;margin:0;
+    display:flex;align-items:center;gap:9px}
+  .brand h1 .play{width:13px;height:15px;background:var(--coral);
+    clip-path:polygon(0 0,100% 50%,0 100%);display:inline-block}
+  .iconbtn{background:var(--card);border:1px solid var(--line);color:var(--ink);
+    width:40px;height:40px;border-radius:12px;display:grid;place-items:center;cursor:pointer}
+  .iconbtn:active{transform:scale(.94)}
+  .iconbtn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8}
+
+  /* hero — próximo de todos */
+  .hero{margin:6px 0 22px;border:1px solid var(--line);border-radius:20px;overflow:hidden;
+    background:radial-gradient(120% 140% at 80% 0%,#1d2c33 0%,var(--bg2) 60%);position:relative}
+  .hero .eyebrow{font-family:var(--display);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--amber);padding:16px 18px 0}
+  .hero .row{display:flex;gap:14px;padding:8px 18px 18px;align-items:flex-end}
+  .hero .poster{width:78px;aspect-ratio:2/3;border-radius:10px;object-fit:cover;background:var(--line);flex:none}
+  .hero .info{flex:1;min-width:0}
+  .hero .name{font-family:var(--display);font-weight:700;font-size:20px;line-height:1.1;margin:0 0 4px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .hero .sub{color:var(--muted);font-size:13px;margin:0 0 2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .hero .count{margin-left:auto;text-align:right;flex:none}
+  .hero .count .num{font-family:var(--display);font-weight:700;font-size:40px;line-height:.9;color:var(--coral)}
+  .hero .count .unit{font-size:11px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+
+  /* list */
+  .sectit{font-family:var(--display);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 10px}
+  .card{display:flex;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:12px;margin-bottom:11px;align-items:center}
+  .card .poster{width:52px;aspect-ratio:2/3;border-radius:8px;object-fit:cover;background:var(--line);flex:none}
+  .card .mid{flex:1;min-width:0}
+  .card .mid .nm{font-weight:600;font-size:15px;margin:0 0 3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .card .mid .ep{color:var(--muted);font-size:12.5px;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .card .mid .strm{display:inline-block;margin-top:5px;font-size:11px;color:var(--amber);
+    border:1px solid var(--line);border-radius:999px;padding:2px 9px}
+  .card .right{flex:none;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+  .card .days{font-family:var(--display);font-weight:700;font-size:20px;line-height:1;color:var(--coral)}
+  .card .days small{display:block;font-family:var(--body);font-weight:500;font-size:10px;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.05em}
+  .card .days.aired{color:var(--good)}
+  .card .days.unknown{color:var(--muted);font-size:13px}
+  .card .acts{display:flex;gap:6px}
+  .minibtn{background:transparent;border:1px solid var(--line);border-radius:9px;color:var(--muted);
+    width:30px;height:30px;display:grid;place-items:center;cursor:pointer}
+  .minibtn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8}
+  .minibtn.cal:active,.minibtn.del:active{transform:scale(.92)}
+  .minibtn.cal{color:var(--amber);border-color:#3a3320}
+
+  .empty{text-align:center;color:var(--muted);padding:48px 20px}
+  .empty .play{width:34px;height:40px;background:var(--line);display:inline-block;
+    clip-path:polygon(0 0,100% 50%,0 100%);margin-bottom:14px}
+  .empty p{margin:6px 0;font-size:14px}
+
+  .bar{display:flex;gap:10px;margin:18px 0 8px}
+  .bar button{flex:1;background:var(--bg2);border:1px solid var(--line);color:var(--ink);
+    border-radius:12px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;font-family:var(--body)}
+  .bar button:active{transform:scale(.98)}
+
+  /* FAB */
+  .fab{position:fixed;right:max(18px,calc(50% - 280px + 18px));
+    bottom:calc(22px + env(safe-area-inset-bottom));z-index:8;
+    width:58px;height:58px;border-radius:18px;border:none;background:var(--coral);color:#1a0f0a;
+    font-size:30px;font-weight:600;cursor:pointer;box-shadow:0 8px 28px rgba(255,107,74,.35);
+    display:grid;place-items:center}
+  .fab:active{transform:scale(.93)}
+
+  /* sheet / modal */
+  .scrim{position:fixed;inset:0;background:rgba(4,8,10,.6);z-index:20;display:none}
+  .scrim.on{display:block}
+  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;background:var(--bg2);
+    border-radius:22px 22px 0 0;border-top:1px solid var(--line);
+    max-width:560px;margin:0 auto;max-height:88vh;overflow:auto;
+    padding:8px 18px calc(22px + env(safe-area-inset-bottom));transform:translateY(110%);
+    transition:transform .26s cubic-bezier(.2,.8,.2,1)}
+  .sheet.on{transform:translateY(0)}
+  .grab{width:40px;height:4px;border-radius:99px;background:var(--line);margin:8px auto 14px}
+  .sheet h2{font-family:var(--display);font-size:18px;margin:0 0 14px}
+  .tabs{display:flex;gap:8px;margin-bottom:14px}
+  .tabs button{flex:1;background:transparent;border:1px solid var(--line);color:var(--muted);
+    padding:9px;border-radius:10px;font-size:13px;cursor:pointer;font-family:var(--body)}
+  .tabs button.on{background:var(--coral);color:#1a0f0a;border-color:var(--coral);font-weight:600}
+  label{display:block;font-size:12px;color:var(--muted);margin:10px 0 5px}
+  input,select{width:100%;background:var(--card);border:1px solid var(--line);color:var(--ink);
+    border-radius:11px;padding:12px;font-size:15px;font-family:var(--body)}
+  input:focus,select:focus{outline:none;border-color:var(--coral)}
+  .searchrow{display:flex;gap:8px}
+  .searchrow button{flex:none;background:var(--coral);color:#1a0f0a;border:none;border-radius:11px;
+    padding:0 16px;font-weight:600;cursor:pointer}
+  .results{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+  .result{display:flex;gap:11px;align-items:center;padding:8px;border:1px solid var(--line);
+    border-radius:12px;cursor:pointer;background:var(--card)}
+  .result:active{border-color:var(--coral)}
+  .result img{width:42px;aspect-ratio:2/3;object-fit:cover;border-radius:6px;background:var(--line);flex:none}
+  .result .rn{font-size:14px;font-weight:600;margin:0}
+  .result .rm{font-size:12px;color:var(--muted);margin:2px 0 0}
+  .hint{font-size:12px;color:var(--muted);line-height:1.5;margin:14px 0 0}
+  .primary{width:100%;background:var(--coral);color:#1a0f0a;border:none;border-radius:13px;
+    padding:14px;font-size:15px;font-weight:600;cursor:pointer;margin-top:16px;font-family:var(--body)}
+  .spin{display:inline-block;width:15px;height:15px;border:2px solid #1a0f0a55;border-top-color:#1a0f0a;
+    border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);
+    background:#101a1f;border:1px solid var(--line);color:var(--ink);padding:11px 16px;border-radius:12px;
+    font-size:13px;z-index:30;opacity:0;transition:.25s;pointer-events:none;max-width:90vw;text-align:center}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1><span class="play"></span>No Ar</h1>
+      <div style="display:flex;gap:8px">
+        <button class="iconbtn" id="notifBtn" title="Notificações">
+          <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        </button>
+        <button class="iconbtn" id="refreshBtn" title="Atualizar episódios">
+          <svg viewBox="0 0 24 24"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div id="hero"></div>
+  <p class="sectit" id="listTitle" style="display:none">Todas as séries</p>
+  <div id="list"></div>
+
+  <div class="bar" id="bottomBar" style="display:none">
+    <button id="addAllCal">Jogar todos na Agenda</button>
+  </div>
+</div>
+
+<button class="fab" id="fab" aria-label="Adicionar série">+</button>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true">
+  <div class="grab"></div>
+  <h2>Adicionar série</h2>
+  <div class="tabs">
+    <button class="on" data-tab="auto" id="tabAuto">Buscar automático</button>
+    <button data-tab="manual" id="tabManual">Inserir manual</button>
+  </div>
+
+  <div id="paneAuto">
+    <label>Nome da série</label>
+    <div class="searchrow">
+      <input id="q" placeholder="ex: Severance, The Boys..." autocomplete="off">
+      <button id="searchBtn">Buscar</button>
+    </div>
+    <div class="results" id="results"></div>
+    <p class="hint">A busca usa a base do TVMaze e já traz o calendário de episódios. Se a sua série não aparecer, use “Inserir manual”.</p>
+  </div>
+
+  <div id="paneManual" style="display:none">
+    <label>Nome da série</label>
+    <input id="mName" placeholder="Nome da série">
+    <label>Onde assiste (streaming)</label>
+    <input id="mStream" placeholder="Netflix, Max, Disney+...">
+    <label>Data e hora do próximo episódio</label>
+    <input id="mDate" type="datetime-local">
+    <button class="primary" id="mAdd">Adicionar série</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = "https://api.tvmaze.com";
+const KEY = "noar.shows.v1";
+let shows = load();
+
+function load(){ try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []} }
+function save(){ localStorage.setItem(KEY, JSON.stringify(shows)); }
+function uid(){ return "m"+Date.now()+Math.random().toString(36).slice(2,6); }
+
+function toast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('on');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('on'),2600);
+}
+
+// ---- date helpers ----
+function nextDate(s){
+  if(s.source==='manual') return s.manualDate ? new Date(s.manualDate) : null;
+  return s.next && s.next.airstamp ? new Date(s.next.airstamp) : null;
+}
+function daysUntil(d){
+  if(!d) return null;
+  const now=new Date();
+  const a=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+  const b=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  return Math.round((a-b)/86400000);
+}
+function fmtDate(d){
+  if(!d) return "Sem data prevista";
+  return d.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'})
+    + (d.getHours()||d.getMinutes() ? ' · '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) : '');
+}
+function epLabel(s){
+  if(s.source==='manual') return s.epText || 'Próximo episódio';
+  if(!s.next) return 'Sem episódio futuro anunciado';
+  const se = (s.next.season!=null? 'T'+s.next.season:'') + (s.next.number!=null? 'E'+String(s.next.number).padStart(2,'0'):'');
+  return (se?se+' · ':'') + (s.next.name||'Próximo episódio');
+}
+function daysBadge(d){
+  const n=daysUntil(d);
+  if(n===null) return {cls:'unknown', txt:'—', sub:'sem data'};
+  if(n<0) return {cls:'aired', txt:'no ar', sub:'já estreou'};
+  if(n===0) return {cls:'', txt:'hoje', sub:'estreia'};
+  if(n===1) return {cls:'', txt:'1', sub:'dia'};
+  return {cls:'', txt:String(n), sub:'dias'};
+}
+
+// ---- TVMaze ----
+async function searchShows(q){
+  const r = await fetch(`${API}/search/shows?q=${encodeURIComponent(q)}`);
+  return r.ok ? r.json() : [];
+}
+async function fetchNext(showId){
+  const r = await fetch(`${API}/shows/${showId}?embed=episodes`);
+  if(!r.ok) return {next:null, network:null};
+  const d = await r.json();
+  const net = (d.network && d.network.name) || (d.webChannel && d.webChannel.name) || null;
+  const eps = (d._embedded && d._embedded.episodes) || [];
+  const now = Date.now();
+  const future = eps
+    .filter(e=> e.airstamp && new Date(e.airstamp).getTime() >= now - 12*3600000)
+    .sort((a,b)=> new Date(a.airstamp)-new Date(b.airstamp));
+  const e = future[0];
+  return {
+    next: e ? {name:e.name, season:e.season, number:e.number, airstamp:e.airstamp} : null,
+    network: net
+  };
+}
+
+// ---- render ----
+function render(){
+  const sorted = [...shows].sort((a,b)=>{
+    const da=nextDate(a), db=nextDate(b);
+    if(!da && !db) return 0; if(!da) return 1; if(!db) return -1;
+    return da-db;
+  });
+  const hero=document.getElementById('hero');
+  const list=document.getElementById('list');
+  const listTitle=document.getElementById('listTitle');
+  const bar=document.getElementById('bottomBar');
+
+  if(shows.length===0){
+    hero.innerHTML=`<div class="empty"><span class="play"></span>
+      <p style="color:var(--ink);font-weight:600;font-size:16px">Nenhuma série ainda</p>
+      <p>Toque no + e adicione a primeira. O app descobre sozinho quando sai o próximo episódio.</p></div>`;
+    list.innerHTML=''; listTitle.style.display='none'; bar.style.display='none'; return;
+  }
+
+  const top = sorted[0];
+  const td = nextDate(top); const tb = daysBadge(td);
+  hero.innerHTML=`<div class="hero">
+    <div class="eyebrow">Próximo no ar</div>
+    <div class="row">
+      ${top.image?`<img class="poster" src="${top.image}" alt="">`:`<div class="poster"></div>`}
+      <div class="info">
+        <p class="name">${esc(top.name)}</p>
+        <p class="sub">${esc(epLabel(top))}</p>
+        <p class="sub" style="color:var(--amber)">${esc(top.streaming||'—')} · ${fmtDate(td)}</p>
+      </div>
+      <div class="count"><div class="num">${tb.txt}</div><div class="unit">${tb.sub}</div></div>
+    </div>
+  </div>`;
+
+  listTitle.style.display='block';
+  list.innerHTML = sorted.map(s=>{
+    const d=nextDate(s); const b=daysBadge(d);
+    return `<div class="card">
+      ${s.image?`<img class="poster" src="${s.image}" alt="">`:`<div class="poster"></div>`}
+      <div class="mid">
+        <p class="nm">${esc(s.name)}</p>
+        <p class="ep">${esc(epLabel(s))}</p>
+        ${s.streaming?`<span class="strm">${esc(s.streaming)}</span>`:''}
+        <p class="ep" style="margin-top:5px">${fmtDate(d)}</p>
+      </div>
+      <div class="right">
+        <div class="days ${b.cls}">${b.txt}<small>${b.sub}</small></div>
+        <div class="acts">
+          <button class="minibtn cal" data-cal="${s.id}" title="Adicionar à Google Agenda">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          </button>
+          <button class="minibtn del" data-del="${s.id}" title="Remover">
+            <svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  bar.style.display='flex';
+}
+function esc(s){return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+// ---- Google Calendar ----
+function pad(n){return String(n).padStart(2,'0');}
+function gcalStamp(d){ // UTC compact
+  return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+'T'
+    +pad(d.getUTCHours())+pad(d.getUTCMinutes())+pad(d.getUTCSeconds())+'Z';
+}
+function gcalUrl(s){
+  const d=nextDate(s); if(!d) return null;
+  const end=new Date(d.getTime()+60*60000);
+  const title=`${s.name} — novo episódio`;
+  const det=`${epLabel(s)}\nOnde: ${s.streaming||'—'}\n\n(criado pelo app No Ar)`;
+  const p=new URLSearchParams({action:'TEMPLATE',text:title,
+    dates:`${gcalStamp(d)}/${gcalStamp(end)}`, details:det});
+  return 'https://calendar.google.com/calendar/render?'+p.toString();
+}
+
+// ---- events ----
+document.getElementById('list').addEventListener('click',e=>{
+  const cal=e.target.closest('[data-cal]'); const del=e.target.closest('[data-del]');
+  if(cal){
+    const s=shows.find(x=>x.id==cal.dataset.cal); const u=gcalUrl(s);
+    if(!u){toast('Essa série está sem data prevista.');return;}
+    window.open(u,'_blank');
+  }
+  if(del){
+    shows=shows.filter(x=>x.id!=del.dataset.del); save(); render();
+  }
+});
+
+document.getElementById('addAllCal').addEventListener('click',()=>{
+  const withDate = shows.filter(s=>nextDate(s) && daysUntil(nextDate(s))>=0);
+  if(!withDate.length){toast('Nenhuma série com data futura.');return;}
+  withDate.forEach((s,i)=> setTimeout(()=>window.open(gcalUrl(s),'_blank'), i*350));
+  toast(`Abrindo ${withDate.length} evento(s) na Agenda...`);
+});
+
+// sheet open/close
+const scrim=document.getElementById('scrim'), sheet=document.getElementById('sheet');
+function openSheet(){scrim.classList.add('on');sheet.classList.add('on');setTimeout(()=>document.getElementById('q').focus(),200);}
+function closeSheet(){scrim.classList.remove('on');sheet.classList.remove('on');document.getElementById('results').innerHTML='';document.getElementById('q').value='';}
+document.getElementById('fab').addEventListener('click',openSheet);
+scrim.addEventListener('click',closeSheet);
+
+// tabs
+document.getElementById('tabAuto').addEventListener('click',()=>setTab('auto'));
+document.getElementById('tabManual').addEventListener('click',()=>setTab('manual'));
+function setTab(t){
+  document.getElementById('tabAuto').classList.toggle('on',t==='auto');
+  document.getElementById('tabManual').classList.toggle('on',t==='manual');
+  document.getElementById('paneAuto').style.display = t==='auto'?'block':'none';
+  document.getElementById('paneManual').style.display = t==='manual'?'block':'none';
+}
+
+// search
+const searchBtn=document.getElementById('searchBtn'), qEl=document.getElementById('q');
+async function doSearch(){
+  const q=qEl.value.trim(); if(!q) return;
+  const res=document.getElementById('results');
+  searchBtn.innerHTML='<span class="spin"></span>';
+  try{
+    const data=await searchShows(q);
+    res.innerHTML = data.slice(0,8).map(d=>{
+      const sh=d.show; const img=sh.image?sh.image.medium:'';
+      const net=(sh.network&&sh.network.name)||(sh.webChannel&&sh.webChannel.name)||'';
+      const yr=sh.premiered?sh.premiered.slice(0,4):'';
+      return `<div class="result" data-id="${sh.id}" data-name="${esc(sh.name)}" data-img="${esc((sh.image&&sh.image.original)||img)}" data-net="${esc(net)}">
+        ${img?`<img src="${img}" alt="">`:'<img alt="">'}
+        <div><p class="rn">${esc(sh.name)}</p><p class="rm">${esc([yr,net].filter(Boolean).join(' · ')||sh.status||'')}</p></div>
+      </div>`;
+    }).join('') || '<p class="hint">Nada encontrado. Tente outro nome ou use “Inserir manual”.</p>';
+  }catch(e){ res.innerHTML='<p class="hint">Falha na busca. Verifique a conexão.</p>'; }
+  searchBtn.textContent='Buscar';
+}
+searchBtn.addEventListener('click',doSearch);
+qEl.addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
+
+document.getElementById('results').addEventListener('click',async e=>{
+  const r=e.target.closest('.result'); if(!r) return;
+  const id=r.dataset.id;
+  if(shows.some(s=>s.id==id)){toast('Essa série já está na lista.');return;}
+  r.style.opacity=.5;
+  const {next,network}=await fetchNext(id);
+  shows.push({id, name:r.dataset.name, image:r.dataset.img||'', source:'tvmaze',
+    streaming: network||r.dataset.net||'', next});
+  save(); render(); closeSheet();
+  toast(next?`${r.dataset.name} adicionada.`:`${r.dataset.name} adicionada (sem episódio futuro ainda).`);
+});
+
+// manual add
+document.getElementById('mAdd').addEventListener('click',()=>{
+  const name=document.getElementById('mName').value.trim();
+  const stream=document.getElementById('mStream').value.trim();
+  const dt=document.getElementById('mDate').value;
+  if(!name){toast('Dê um nome à série.');return;}
+  shows.push({id:uid(), name, image:'', source:'manual', streaming:stream,
+    manualDate: dt? new Date(dt).toISOString():null, epText:'Próximo episódio'});
+  save(); render(); closeSheet();
+  document.getElementById('mName').value='';document.getElementById('mStream').value='';document.getElementById('mDate').value='';
+  toast(`${name} adicionada.`);
+});
+
+// refresh all tvmaze shows
+document.getElementById('refreshBtn').addEventListener('click',async()=>{
+  const btn=document.getElementById('refreshBtn'); btn.style.opacity=.4;
+  let updated=0;
+  for(const s of shows){
+    if(s.source!=='tvmaze') continue;
+    try{ const {next,network}=await fetchNext(s.id); s.next=next; if(network)s.streaming=network; updated++; }catch(e){}
+  }
+  save(); render(); btn.style.opacity=1;
+  toast(updated?`${updated} série(s) atualizada(s).`:'Nada para atualizar.');
+  checkNotify();
+});
+
+// ---- notifications (local, while app is open) ----
+document.getElementById('notifBtn').addEventListener('click',async()=>{
+  if(!('Notification' in window)){toast('Este navegador não suporta notificações.');return;}
+  const p=await Notification.requestPermission();
+  toast(p==='granted'?'Notificações ativadas neste app.':'Permissão de notificação negada.');
+  if(p==='granted') checkNotify();
+});
+function checkNotify(){
+  if(!('Notification' in window) || Notification.permission!=='granted') return;
+  const todays = shows.filter(s=>{const n=daysUntil(nextDate(s));return n===0;});
+  const seen = JSON.parse(localStorage.getItem('noar.notified')||'[]');
+  const today = new Date().toDateString();
+  todays.forEach(s=>{
+    const tag = s.id+'|'+today;
+    if(seen.includes(tag)) return;
+    new Notification('Estreia hoje 🎬', {body:`${s.name} — ${epLabel(s)}`, icon:'icons/icon-192.png', tag});
+    seen.push(tag);
+  });
+  localStorage.setItem('noar.notified', JSON.stringify(seen.slice(-200)));
+}
+
+// service worker
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('service-worker.js').catch(()=>{}); }
+
+render();
+checkNotify();
+// re-check when app regains focus
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) checkNotify(); });
+</script>
+</body>
+</html>
